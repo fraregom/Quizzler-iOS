@@ -11,6 +11,7 @@ import UIKit
 
 struct quizBrain {
     var questionNumber = 0
+    var score = 0
     let quiz: [Question] = [
         Question(q: "A slug's blood is green.", a: "True"),
         Question(q: "Approximately one quarter of human bones are in the feet.", a: "True"),
@@ -27,12 +28,14 @@ struct quizBrain {
         
     ]
     
-    func getAnswerColor(_ userAnswer: String) -> UIColor {
+    mutating func getAnswerColor(_ userAnswer: String) -> UIColor {
         let actualAnswer = quiz[questionNumber].answer
         
         if (actualAnswer == userAnswer){
+            score += 1
             return UIColor.green
         } else {
+            score -= 1
             return UIColor.red
         }
     }
@@ -45,11 +48,16 @@ struct quizBrain {
         return Float(questionNumber + 1)/Float(quiz.count)
     }
     
+    func getScore() -> Int {
+        return score
+    }
+    
     mutating func moveQuestion(){
         if (questionNumber < quiz.count - 1){
             questionNumber += 1
         } else {
             questionNumber = 0
+            score = 0
         }
     }
 }

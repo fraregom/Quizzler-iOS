@@ -10,12 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var questionText: UILabel!
     @IBOutlet weak var trueButton: UIButton!
     @IBOutlet weak var falseButton: UIButton!
     @IBOutlet weak var progressBar: UIProgressView!
     
-    var quizModel = quizBrain()
+    var quiz = quizBrain()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +27,9 @@ class ViewController: UIViewController {
     @IBAction func answerButtonPressed(_ sender: UIButton) {
         
         let userAnswer = sender.currentTitle!
-        sender.backgroundColor = quizModel.getAnswerColor(userAnswer)
+        sender.backgroundColor = quiz.getAnswerColor(userAnswer)
         
-        quizModel.moveQuestion()
+        quiz.moveQuestion()
         updateUI()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
@@ -38,8 +39,9 @@ class ViewController: UIViewController {
     }
     
     func updateUI(){
-        questionText.text = quizModel.getQuestionText()
-        progressBar.progress = quizModel.getProgress()
+        questionText.text = quiz.getQuestionText()
+        progressBar.progress = quiz.getProgress()
+        scoreLabel.text = "Score: \(quiz.getScore())"
     }
     
     
